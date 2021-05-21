@@ -15,9 +15,6 @@ target/
 
 ### IntelliJ IDEA ###
 .idea
-.cache
-.mvn
-node_modules
 *.iws
 *.iml
 *.ipr

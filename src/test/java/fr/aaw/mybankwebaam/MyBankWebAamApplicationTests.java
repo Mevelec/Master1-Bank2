@@ -1,10 +1,10 @@
-package fr.aaw.mybankweb;
+package fr.aaw.mybankwebaam;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MyBankWebApplicationTests {
+class MyBankWebAamApplicationTests {
 
     @Test
     void contextLoads() {
