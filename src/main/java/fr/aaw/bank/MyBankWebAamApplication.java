@@ -1,4 +1,4 @@
-package fr.aaw.mybankwebaam;
+package fr.aaw.bank;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,5 +9,4 @@ public class MyBankWebAamApplication {
     public static void main(String[] args) {
         SpringApplication.run(MyBankWebAamApplication.class, args);
     }
-
 }
