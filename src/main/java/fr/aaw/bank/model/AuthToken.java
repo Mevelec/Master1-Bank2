@@ -19,4 +19,17 @@ public class AuthToken {
     private Integer userId;
     private Date expiredDate;
 
+    // ---------------------- GETTERS SETTERS -----------------------
+    // TOKEN --------------------------------
+    public String getToken(){
+        return this.token;
+    }
+    // USER ID --------------------------------
+    public Integer getUserId(){
+        return this.userId;
+    }
+    // EXPIRED DATE --------------------------------
+    public Date getExpiredDate(){
+        return this.expiredDate;
+    }
 }
