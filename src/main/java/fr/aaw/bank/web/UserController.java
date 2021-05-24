@@ -26,6 +26,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @RestController
+@RequestMapping("/api/user")
 class UserController {
 
     private final Logger log = LoggerFactory.getLogger(UserController.class);
@@ -60,7 +61,7 @@ class UserController {
     }
 
 
-    @PostMapping("/connect")
+    @PostMapping("/login")
     public void login(@RequestParam String username, @RequestParam String password, HttpServletResponse response) throws IOException {
         try {
             final Authentication authentication = authenticationManager.authenticate(

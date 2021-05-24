@@ -64,7 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 
     @Override
     public void configure(final WebSecurity web) throws Exception {
-        web.ignoring().mvcMatchers("/img/**");
+        web.ignoring().mvcMatchers("/img/**", "/*.js", "/*.css", "/*.html");
     }
 
     @Override
@@ -77,9 +77,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 
         http
                 .authorizeRequests()
-                .antMatchers("/api/user/login", "/", "/login", "/livredor", "/error", "/css/*").permitAll()
-                .antMatchers(HttpMethod.DELETE, "/api/comments").hasAuthority("ROLE_ADMIN")
-                .anyRequest().authenticated();
+                .antMatchers("/index*", "/", "/login*", "/*.js",  "/static/**", "/*.json", "/*.ico", "/css/*").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin().loginPage("/login.html")
+                .loginProcessingUrl("/api/user/login")
+                .defaultSuccessUrl("/index.html",true)
+                .failureUrl("/login.html?error=true");
 
         http
                 .addFilterBefore(new AuthenticationFilter(authTokenRepository, userDetailsService, authToken), UsernamePasswordAuthenticationFilter.class);
@@ -96,7 +100,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                 .csrf()
                 .requireCsrfProtectionMatcher(request ->
                         ("/api/user/login".equals(request.getRequestURI())
-                                || ("/api/comments".equals(request.getRequestURI()) && HttpMethod.POST.matches(request.getMethod())
+                                || ("/api/transactions".equals(request.getRequestURI()) && HttpMethod.POST.matches(request.getMethod())
                         ))
                 )
                 .csrfTokenRepository(getCsrfTokenRepository())
@@ -163,7 +167,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("forward:login.html");
         registry.addViewController("/login").setViewName("forward:login.html");
-        registry.addViewController("/livredor").setViewName("forward:livredor.html");
     }
 
 }
