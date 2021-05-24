@@ -1,7 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Test from "./Test";
+import ConnectForm from "./ConnectForm"
 
 ReactDOM.render(
-    <Test/>  , document.getElementById('main')
+
+
+
+    <ConnectForm/>  , document.getElementById('main')
 )
