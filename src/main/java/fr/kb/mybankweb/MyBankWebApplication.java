@@ -1,12 +1,13 @@
-package fr.aaw.bank;
+package fr.kb.mybankweb;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MyBankWebAamApplication {
+public class MyBankWebApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(MyBankWebAamApplication.class, args);
+        SpringApplication.run(MyBankWebApplication.class, args);
     }
+
 }
