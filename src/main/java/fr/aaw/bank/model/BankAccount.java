@@ -4,8 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import lombok.Data;
+
 import java.math.BigDecimal;
 
+@Data
+@Entity
 public class BankAccount {
     
     @Id
@@ -14,7 +18,7 @@ public class BankAccount {
     @OneToOne
     private User user;
 
-    private BigDecimal value;
+    private BigDecimal value; 
 
     //--------------------------- GETTERS SETTERS --------------------------
     // ID --------------------

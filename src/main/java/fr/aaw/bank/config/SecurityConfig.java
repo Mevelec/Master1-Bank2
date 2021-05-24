@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -46,16 +47,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 
     @Autowired
     AuthTokenRepository authTokenRepository;
+    //@Value("${com.serli.auth.token}")
+    private String authToken = "AUTHTOKEN";
 
-    @Value("${com.serli.auth.token}")
-    private String authToken;
 
+    //@Value("${com.serli.csrf.token}")
+    private String csrfCookieTokenName = "XSRF-TOKEN";
 
-    @Value("${com.serli.csrf.token}")
-    private String csrfCookieTokenName;
-
-    @Value("${com.serli.csrf.header.token}")
-    private String csrfHeaderTokenName;
+    //@Value("${com.serli.csrf.header.token}")
+    private String csrfHeaderTokenName = "X-XSRF-TOKEN";
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
