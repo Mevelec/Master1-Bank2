@@ -46,7 +46,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
 
-        Cookie token = WebUtils.getCookie(request, authToken);
+        Cookie token = WebUtils.getCookie(request, authToken);  
         if (token != null) {
             try {
                 Optional<AuthTokens> byId = authTokenRepository.findById(token.getValue());

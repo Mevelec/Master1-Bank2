@@ -10,15 +10,13 @@ import java.math.BigDecimal;
 
 @Data
 @Entity
-public class BankAccount {
+public class BankAccounts {
     
     @Id
     private Integer id;
 
     @OneToOne
     private Users user;
-
-    private BigDecimal value; 
 
     //--------------------------- GETTERS SETTERS --------------------------
     // ID --------------------
@@ -35,13 +33,5 @@ public class BankAccount {
     }
     public void setUser(Users user) {
         this.user = user;
-    }
-
-    // VALUE --------------------
-    public BigDecimal getValue() {
-        return value;
-    }
-    public void setValue(BigDecimal value) {
-        this.value = value;
     }
 }
