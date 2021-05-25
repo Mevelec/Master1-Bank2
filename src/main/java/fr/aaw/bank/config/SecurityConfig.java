@@ -95,7 +95,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                 .logoutSuccessUrl("/homepage")
                 .invalidateHttpSession(true)
                 .deleteCookies(authToken, csrfCookieTokenName);
-
+/*
         http
                 .csrf()
                 .requireCsrfProtectionMatcher(request ->
@@ -105,7 +105,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                         
                 )
                 .csrfTokenRepository(getCsrfTokenRepository())
-        ;
+        ;*/
     }
 
 
