@@ -52,9 +52,9 @@ class UserController {
         return userRepository.findAll();
     }
 
-    @GetMapping(value = "/login")
-    public String login() {
-        return "login";
+    @GetMapping("/{id}")
+    public Users lignes(@PathVariable("id") Integer id){
+        return userRepository.findById(id).get();
     }
     
     @PostMapping("/login")
@@ -79,7 +79,7 @@ class UserController {
             tokenCookie.setHttpOnly(true);
             tokenCookie.setMaxAge(expiredTime);
             response.addCookie(tokenCookie);
-            response.sendRedirect("/livredor");
+            response.sendRedirect("/homepage");
         } catch (Exception e) {
             response.sendError(HttpStatus.LOCKED.value());
         }

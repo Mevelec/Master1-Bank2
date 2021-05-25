@@ -77,13 +77,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 
         http
                 .authorizeRequests()
-                .antMatchers("/index*", "/api/user/login", "/login", "/",  "/*.js", "/static/**", "/*.json", "/*.ico", "/css/*").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin().loginPage("/index.html")
-                .loginProcessingUrl("/api/user/login")
-                .defaultSuccessUrl("/index.html",true)
-                .failureUrl("/index.html?error=true");
+                .antMatchers("/homepage*", "/login*", "/api/user/login", "/",  "/*.js", "/*.json", "/*.ico", "/css/*"
+                /*,
+                "/api/user/**",
+                "/api/BankAccount/**",
+                "/api/Operation/**"*/
+                ).permitAll()
+                .anyRequest().authenticated();
 
         http
                 .addFilterBefore(new AuthenticationFilter(authTokenRepository, userDetailsService, authToken), UsernamePasswordAuthenticationFilter.class);
@@ -92,7 +92,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                 .logout()
                 .logoutUrl("/api/user/logout")
                 .logoutSuccessHandler(getLogoutSuccessHandler())
-                .logoutSuccessUrl("/login")
+                .logoutSuccessUrl("/homepage")
                 .invalidateHttpSession(true)
                 .deleteCookies(authToken, csrfCookieTokenName);
 
@@ -102,7 +102,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                         (
                             "/api/user/login".equals(request.getRequestURI())
                         ) && HttpMethod.POST.matches(request.getMethod())
-                        ))
+                        
                 )
                 .csrfTokenRepository(getCsrfTokenRepository())
         ;

@@ -17,7 +17,6 @@ import java.util.Collection;
 
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 public class Users implements UserDetails {
@@ -27,6 +26,9 @@ public class Users implements UserDetails {
     private String username;
     private String password;
 
+    public Users(){
+
+    }
     public Users(String name, String password){
         this.username=name;
         this.password = password;
