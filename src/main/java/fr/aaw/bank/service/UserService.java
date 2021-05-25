@@ -1,6 +1,6 @@
 package fr.aaw.bank.service;
 
-import fr.aaw.bank.model.User;
+import fr.aaw.bank.model.Users;
 import fr.aaw.bank.model.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,13 +21,13 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         Objects.requireNonNull(username);
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        Users user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Users not found"));
 
         return user;
     }
 
-    public Optional<User> findById(Integer id){
+    public Optional<Users> findById(Integer id){
         return userRepository.findById(id);
     }
 

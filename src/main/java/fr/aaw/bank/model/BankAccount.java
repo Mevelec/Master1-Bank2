@@ -16,7 +16,7 @@ public class BankAccount {
     private Integer id;
 
     @OneToOne
-    private User user;
+    private Users user;
 
     private BigDecimal value; 
 
@@ -30,10 +30,10 @@ public class BankAccount {
     }
     
     // USER --------------------
-    public User getUser() {
+    public Users getUser() {
         return user;
     }
-    public void setUser(User user) {
+    public void setUser(Users user) {
         this.user = user;
     }
 

@@ -2,7 +2,7 @@ package fr.aaw.bank.config;
 
 import fr.aaw.bank.model.AuthToken;
 import fr.aaw.bank.model.AuthTokenRepository;
-import fr.aaw.bank.model.User;
+import fr.aaw.bank.model.Users;
 import fr.aaw.bank.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,7 +53,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
                 byId.ifPresent((authTokenValue) -> {
                     if (authTokenValue.getExpiredDate().after(new Date())) {
                         Integer userId = authTokenValue.getUserId();
-                        Optional<User> userOpt = userService.findById(userId);
+                        Optional<Users> userOpt = userService.findById(userId);
                         userOpt.ifPresent(user -> {
                             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
                             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

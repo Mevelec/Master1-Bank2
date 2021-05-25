@@ -59,12 +59,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
+        //auth.userDetailsService(userDetailsService);
     }
 
     @Override
     public void configure(final WebSecurity web) throws Exception {
-        web.ignoring().mvcMatchers("/img/**", "/*.js", "/*.css", "/*.html");
+        //web.ignoring().mvcMatchers("/img/**", "/*.js", "/*.css", "/*.html");
     }
 
     @Override
@@ -77,13 +77,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 
         http
                 .authorizeRequests()
-                .antMatchers("/index*", "/", "/login*", "/*.js",  "/static/**", "/*.json", "/*.ico", "/css/*").permitAll()
+                .antMatchers("/index*", "/", "/*", "/**", "/*.js", "/static/**", "/*.json", "/*.ico", "/css/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login.html")
+                .formLogin().loginPage("/index.html")
                 .loginProcessingUrl("/api/user/login")
                 .defaultSuccessUrl("/index.html",true)
-                .failureUrl("/login.html?error=true");
+                .failureUrl("/index.html?error=true");
 
         http
                 .addFilterBefore(new AuthenticationFilter(authTokenRepository, userDetailsService, authToken), UsernamePasswordAuthenticationFilter.class);

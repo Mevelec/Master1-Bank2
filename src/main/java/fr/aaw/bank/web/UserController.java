@@ -2,7 +2,7 @@ package fr.aaw.bank.web;
 
 import fr.aaw.bank.model.AuthToken;
 import fr.aaw.bank.model.AuthTokenRepository;
-import fr.aaw.bank.model.User;
+import fr.aaw.bank.model.Users;
 import fr.aaw.bank.model.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -44,23 +45,32 @@ class UserController {
     private int expiredTime = 3600000;
 
 
+    @GetMapping("/list")
+    public List<Users> lignes(){
+        return userRepository.findAll();
+    }
+
     @Autowired
     private AuthenticationManager authenticationManager;
 
 
     @GetMapping("/current")
-    ResponseEntity<User> getUserConnected(Authentication authentication) {
-        User user = (User) authentication.getPrincipal();
+    ResponseEntity<Users> getUserConnected(Authentication authentication) {
+        Users user = (Users) authentication.getPrincipal();
         return ResponseEntity.ok().body(user);
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<User> getUserConnected(@PathVariable("id") Integer id) {
-        User user = userRepository.findById(id).orElse(new User());
+    ResponseEntity<Users> getUserConnected(@PathVariable("id") Integer id) {
+        Users user = userRepository.findById(id).orElse(new Users());
         return ResponseEntity.ok().body(user);
     }
 
-
+    @GetMapping(value = "/login")
+    public String login() {
+        return "login";
+    }
+    
     @PostMapping("/login")
     public void login(@RequestParam String username, @RequestParam String password, HttpServletResponse response) throws IOException {
         try {
@@ -71,7 +81,7 @@ class UserController {
                     )
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            final User user = (User) authentication.getPrincipal();
+            final Users user = (Users) authentication.getPrincipal();
             String sessionId = UUID.randomUUID().toString();
             Date expiredDate = new Date(System.currentTimeMillis() + expiredTime);
             AuthToken token = new AuthToken(sessionId, user.getId(), expiredDate);
