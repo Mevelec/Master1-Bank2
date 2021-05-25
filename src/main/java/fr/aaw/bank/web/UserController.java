@@ -38,10 +38,10 @@ class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    //@Value("${com.serli.auth.token}")
-    private String authToken = "AUTHTOKEN";
+    @Value("${com.serli.auth.token}")
+    private String authToken;
 
-    //@Value("${com.serli.auth.expired}")
+    @Value("${com.serli.auth.expired}")
     private int expiredTime = 3600000;
 
     @Autowired

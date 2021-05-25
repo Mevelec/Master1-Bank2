@@ -47,24 +47,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 
     @Autowired
     AuthTokenRepository authTokenRepository;
-    //@Value("${com.serli.auth.token}")
-    private String authToken = "AUTHTOKEN";
+    @Value("${com.serli.auth.token}")
+    private String authToken;
 
 
-    //@Value("${com.serli.csrf.token}")
-    private String csrfCookieTokenName = "XSRF-TOKEN";
+    @Value("${com.serli.csrf.token}")
+    private String csrfCookieTokenName;
 
-    //@Value("${com.serli.csrf.header.token}")
-    private String csrfHeaderTokenName = "X-XSRF-TOKEN";
+    @Value("${com.serli.csrf.header.token}")
+    private String csrfHeaderTokenName;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        //auth.userDetailsService(userDetailsService);
+        auth.userDetailsService(userDetailsService);
     }
 
     @Override
     public void configure(final WebSecurity web) throws Exception {
-        //web.ignoring().mvcMatchers("/img/**", "/*.js", "/*.css", "/*.html");
+        web.ignoring().mvcMatchers("/img/**", "/*.js", "/*.css", "/*.html");
     }
 
     @Override
@@ -106,8 +106,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                 )
                 .csrfTokenRepository(getCsrfTokenRepository())
         ;
-
-
     }
 
 
@@ -166,7 +164,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("forward:login.html");
+        registry.addViewController("/").setViewName("forward:index.html");
         registry.addViewController("/login").setViewName("forward:login.html");
     }
 
