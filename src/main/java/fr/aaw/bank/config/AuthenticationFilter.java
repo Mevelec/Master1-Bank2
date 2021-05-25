@@ -1,6 +1,6 @@
 package fr.aaw.bank.config;
 
-import fr.aaw.bank.model.AuthToken;
+import fr.aaw.bank.model.AuthTokens;
 import fr.aaw.bank.model.AuthTokenRepository;
 import fr.aaw.bank.model.Users;
 import fr.aaw.bank.service.UserService;
@@ -49,7 +49,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         Cookie token = WebUtils.getCookie(request, authToken);
         if (token != null) {
             try {
-                Optional<AuthToken> byId = authTokenRepository.findById(token.getValue());
+                Optional<AuthTokens> byId = authTokenRepository.findById(token.getValue());
                 byId.ifPresent((authTokenValue) -> {
                     if (authTokenValue.getExpiredDate().after(new Date())) {
                         Integer userId = authTokenValue.getUserId();

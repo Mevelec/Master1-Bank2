@@ -1,6 +1,6 @@
 package fr.aaw.bank.config;
 
-import fr.aaw.bank.model.AuthToken;
+import fr.aaw.bank.model.AuthTokens;
 import fr.aaw.bank.model.AuthTokenRepository;
 import fr.aaw.bank.service.UserService;
 import org.slf4j.Logger;
@@ -77,7 +77,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 
         http
                 .authorizeRequests()
-                .antMatchers("/index*", "/", "/*", "/**", "/*.js", "/static/**", "/*.json", "/*.ico", "/css/*").permitAll()
+                .antMatchers("/index*", "/api/user/login", "/login", "/",  "/*.js", "/static/**", "/*.json", "/*.ico", "/css/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/index.html")
@@ -99,8 +99,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
         http
                 .csrf()
                 .requireCsrfProtectionMatcher(request ->
-                        ("/api/user/login".equals(request.getRequestURI())
-                                || ("/api/transactions".equals(request.getRequestURI()) && HttpMethod.POST.matches(request.getMethod())
+                        (
+                            "/api/user/login".equals(request.getRequestURI())
+                        ) && HttpMethod.POST.matches(request.getMethod())
                         ))
                 )
                 .csrfTokenRepository(getCsrfTokenRepository())
@@ -124,7 +125,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
             public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
                 Cookie token = WebUtils.getCookie(request, authToken);
                 if (token != null) {
-                    Optional<AuthToken> byUserId = authTokenRepository.findById(token.getValue());
+                    Optional<AuthTokens> byUserId = authTokenRepository.findById(token.getValue());
 
                     byUserId.ifPresent((authToken) -> {
                         authTokenRepository.delete(authToken);

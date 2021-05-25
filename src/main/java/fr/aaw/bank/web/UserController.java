@@ -1,6 +1,6 @@
 package fr.aaw.bank.web;
 
-import fr.aaw.bank.model.AuthToken;
+import fr.aaw.bank.model.AuthTokens;
 import fr.aaw.bank.model.AuthTokenRepository;
 import fr.aaw.bank.model.Users;
 import fr.aaw.bank.model.UserRepository;
@@ -44,26 +44,12 @@ class UserController {
     //@Value("${com.serli.auth.expired}")
     private int expiredTime = 3600000;
 
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     @GetMapping("/list")
     public List<Users> lignes(){
         return userRepository.findAll();
-    }
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-
-    @GetMapping("/current")
-    ResponseEntity<Users> getUserConnected(Authentication authentication) {
-        Users user = (Users) authentication.getPrincipal();
-        return ResponseEntity.ok().body(user);
-    }
-
-    @GetMapping("/{id}")
-    ResponseEntity<Users> getUserConnected(@PathVariable("id") Integer id) {
-        Users user = userRepository.findById(id).orElse(new Users());
-        return ResponseEntity.ok().body(user);
     }
 
     @GetMapping(value = "/login")
@@ -84,7 +70,7 @@ class UserController {
             final Users user = (Users) authentication.getPrincipal();
             String sessionId = UUID.randomUUID().toString();
             Date expiredDate = new Date(System.currentTimeMillis() + expiredTime);
-            AuthToken token = new AuthToken(sessionId, user.getId(), expiredDate);
+            AuthTokens token = new AuthTokens(sessionId, user.getId(), expiredDate);
             authTokenRepository.save(token);
             log.info("new session : {} expired in {} user {}", token.getToken(), token.getExpiredDate().toString(), user.getUsername());
 
