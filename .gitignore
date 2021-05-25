@@ -35,3 +35,4 @@ build/
 
 .cache/*
 node_modules/*
+node/*
