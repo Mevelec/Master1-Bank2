@@ -12,7 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class AuthToken {
+public class AuthTokens {
 
     @Id
     private String token;

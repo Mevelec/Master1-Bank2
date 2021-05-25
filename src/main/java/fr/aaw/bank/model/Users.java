@@ -17,18 +17,19 @@ import java.util.Collection;
 
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class User implements UserDetails {
+public class Users implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String username;
     private String password;
-    private boolean admin;
 
-    public User(String name, String password){
+    public Users(){
+
+    }
+    public Users(String name, String password){
         this.username=name;
         this.password = password;
     }
@@ -55,9 +56,6 @@ public class User implements UserDetails {
     @Override
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(admin){
-            return Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        }
         return null;
     }
     @Override

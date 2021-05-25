@@ -1,8 +1,8 @@
 package fr.aaw.bank.web;
 
-import fr.aaw.bank.model.AuthToken;
+import fr.aaw.bank.model.AuthTokens;
 import fr.aaw.bank.model.AuthTokenRepository;
-import fr.aaw.bank.model.User;
+import fr.aaw.bank.model.Users;
 import fr.aaw.bank.model.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,9 +23,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
+@RequestMapping("/api/user")
 class UserController {
 
     private final Logger log = LoggerFactory.getLogger(UserController.class);
@@ -36,31 +38,26 @@ class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    //@Value("${com.serli.auth.token}")
-    private String authToken = "AUTHTOKEN";
+    @Value("${com.serli.auth.token}")
+    private String authToken;
 
-    //@Value("${com.serli.auth.expired}")
+    @Value("${com.serli.auth.expired}")
     private int expiredTime = 3600000;
-
 
     @Autowired
     private AuthenticationManager authenticationManager;
 
-
-    @GetMapping("/current")
-    ResponseEntity<User> getUserConnected(Authentication authentication) {
-        User user = (User) authentication.getPrincipal();
-        return ResponseEntity.ok().body(user);
+    @GetMapping("/list")
+    public List<Users> lignes(){
+        return userRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<User> getUserConnected(@PathVariable("id") Integer id) {
-        User user = userRepository.findById(id).orElse(new User());
-        return ResponseEntity.ok().body(user);
+    public Users lignes(@PathVariable("id") Integer id){
+        return userRepository.findById(id).get();
     }
-
-
-    @PostMapping("/connect")
+    
+    @PostMapping("/login")
     public void login(@RequestParam String username, @RequestParam String password, HttpServletResponse response) throws IOException {
         try {
             final Authentication authentication = authenticationManager.authenticate(
@@ -70,10 +67,10 @@ class UserController {
                     )
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            final User user = (User) authentication.getPrincipal();
+            final Users user = (Users) authentication.getPrincipal();
             String sessionId = UUID.randomUUID().toString();
             Date expiredDate = new Date(System.currentTimeMillis() + expiredTime);
-            AuthToken token = new AuthToken(sessionId, user.getId(), expiredDate);
+            AuthTokens token = new AuthTokens(sessionId, user.getId(), expiredDate);
             authTokenRepository.save(token);
             log.info("new session : {} expired in {} user {}", token.getToken(), token.getExpiredDate().toString(), user.getUsername());
 
@@ -82,7 +79,7 @@ class UserController {
             tokenCookie.setHttpOnly(true);
             tokenCookie.setMaxAge(expiredTime);
             response.addCookie(tokenCookie);
-            response.sendRedirect("/livredor");
+            response.sendRedirect("/homepage");
         } catch (Exception e) {
             response.sendError(HttpStatus.LOCKED.value());
         }

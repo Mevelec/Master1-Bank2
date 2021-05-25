@@ -1,6 +1,6 @@
 package fr.aaw.bank.config;
 
-import fr.aaw.bank.model.AuthToken;
+import fr.aaw.bank.model.AuthTokens;
 import fr.aaw.bank.model.AuthTokenRepository;
 import fr.aaw.bank.service.UserService;
 import org.slf4j.Logger;
@@ -47,15 +47,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 
     @Autowired
     AuthTokenRepository authTokenRepository;
-    //@Value("${com.serli.auth.token}")
-    private String authToken = "AUTHTOKEN";
+    @Value("${com.serli.auth.token}")
+    private String authToken;
 
 
-    //@Value("${com.serli.csrf.token}")
-    private String csrfCookieTokenName = "XSRF-TOKEN";
+    @Value("${com.serli.csrf.token}")
+    private String csrfCookieTokenName;
 
-    //@Value("${com.serli.csrf.header.token}")
-    private String csrfHeaderTokenName = "X-XSRF-TOKEN";
+    @Value("${com.serli.csrf.header.token}")
+    private String csrfHeaderTokenName;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -64,7 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 
     @Override
     public void configure(final WebSecurity web) throws Exception {
-        web.ignoring().mvcMatchers("/img/**");
+        web.ignoring().mvcMatchers("/img/**", "/*.js", "/*.css", "/*.html");
     }
 
     @Override
@@ -77,8 +77,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 
         http
                 .authorizeRequests()
-                .antMatchers("/api/user/login", "/", "/login", "/livredor", "/error", "/css/*").permitAll()
-                .antMatchers(HttpMethod.DELETE, "/api/comments").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/homepage*", "/login*", "/api/user/login", "/",  "/*.js", "/*.json", "/*.ico", "/css/*"
+                /*,
+                "/api/user/**",
+                "/api/BankAccount/**",
+                "/api/Operation/**"*/
+                ).permitAll()
                 .anyRequest().authenticated();
 
         http
@@ -88,21 +92,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                 .logout()
                 .logoutUrl("/api/user/logout")
                 .logoutSuccessHandler(getLogoutSuccessHandler())
-                .logoutSuccessUrl("/login")
+                .logoutSuccessUrl("/homepage")
                 .invalidateHttpSession(true)
                 .deleteCookies(authToken, csrfCookieTokenName);
 
         http
                 .csrf()
                 .requireCsrfProtectionMatcher(request ->
-                        ("/api/user/login".equals(request.getRequestURI())
-                                || ("/api/comments".equals(request.getRequestURI()) && HttpMethod.POST.matches(request.getMethod())
-                        ))
+                        (
+                            "/api/user/login".equals(request.getRequestURI())
+                        ) && HttpMethod.POST.matches(request.getMethod())
+                        
                 )
                 .csrfTokenRepository(getCsrfTokenRepository())
         ;
-
-
     }
 
 
@@ -120,7 +123,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
             public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
                 Cookie token = WebUtils.getCookie(request, authToken);
                 if (token != null) {
-                    Optional<AuthToken> byUserId = authTokenRepository.findById(token.getValue());
+                    Optional<AuthTokens> byUserId = authTokenRepository.findById(token.getValue());
 
                     byUserId.ifPresent((authToken) -> {
                         authTokenRepository.delete(authToken);
@@ -161,9 +164,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("forward:login.html");
+        registry.addViewController("/").setViewName("forward:index.html");
         registry.addViewController("/login").setViewName("forward:login.html");
-        registry.addViewController("/livredor").setViewName("forward:livredor.html");
     }
 
 }
