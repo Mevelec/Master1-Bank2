@@ -9,27 +9,36 @@ import javax.persistence.Id;
 import java.util.Date;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 public class AuthTokens {
 
     @Id
-    private String token;
-    private Integer userId;
-    private Date expiredDate;
+    private String id;
+    private Integer userid;
+    private Date expireddate;
+
+    public AuthTokens() {
+    }
+
+    public AuthTokens(String id, Integer userid, Date expireddate) {
+        this.id = id;
+        this.userid = userid;
+        this.expireddate = expireddate;
+    }
+
+
 
     // ---------------------- GETTERS SETTERS -----------------------
     // TOKEN --------------------------------
     public String getToken(){
-        return this.token;
+        return this.id;
     }
     // USER ID --------------------------------
     public Integer getUserId(){
-        return this.userId;
+        return this.userid;
     }
     // EXPIRED DATE --------------------------------
     public Date getExpiredDate(){
-        return this.expiredDate;
+        return this.expireddate;
     }
 }

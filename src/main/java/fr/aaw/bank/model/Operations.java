@@ -19,7 +19,9 @@ public class Operations {
     private Date date;
 
     @OneToOne
-    private BankAccounts account;
+    private BankAccounts srcAccount;
+    @OneToOne
+    private BankAccounts dstAccount;
 
     //--------------------------- GETTERS SETTERS --------------------------
     // ID --------------------
@@ -31,11 +33,18 @@ public class Operations {
     }
     
     // account --------------------
-    public BankAccounts getBankAccount() {
-        return account;
+    public BankAccounts getEmitterBankAccount() {
+        return srcAccount;
     }
-    public void setBankAccount(BankAccounts account) {
-        this.account = account;
+    public void setEmitterBankAccount(BankAccounts account) {
+        this.srcAccount = account;
+    }
+
+    public BankAccounts getRecieverBankAccount() {
+        return dstAccount;
+    }
+    public void setRecieverBankAccount(BankAccounts account) {
+        this.dstAccount = account;
     }
 
     // Amount --------------------

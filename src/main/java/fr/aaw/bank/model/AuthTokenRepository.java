@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface AuthTokenRepository extends JpaRepository<AuthTokens, String> {
 
-    List<AuthTokens> findByUserId(Integer user);
+    List<AuthTokens> findByUserid(Integer user);
 }

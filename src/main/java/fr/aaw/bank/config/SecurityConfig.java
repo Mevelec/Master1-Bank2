@@ -76,8 +76,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http
+                .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/homepage*", "/login*", "/api/user/login", "/",  "/*.js", "/*.json", "/*.ico", "/css/*"
+                .antMatchers("/homepage*", "/login*", "/api/user/login**", "/",  "/*.js", "/*.json", "/*.ico", "/css/*"
                 /*,
                 "/api/user/**",
                 "/api/BankAccount/**",

@@ -3,6 +3,8 @@ package fr.aaw.bank.web;
 import fr.aaw.bank.model.AuthTokens;
 import fr.aaw.bank.model.BankAccountRepository;
 import fr.aaw.bank.model.BankAccounts;
+import fr.aaw.bank.model.Operations;
+import fr.aaw.bank.model.OperationsRepository;
 import fr.aaw.bank.model.AuthTokenRepository;
 import fr.aaw.bank.model.Users;
 import fr.aaw.bank.model.UserRepository;
@@ -35,15 +37,15 @@ class OperationsController {
     private final Logger log = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
-    private BankAccountRepository bankRepository;
+    private OperationsRepository operationRepository;
 
     @GetMapping("/list")
-    public List<BankAccounts> lignes(){
-        return bankRepository.findAll();
+    public List<Operations> lignes(){
+        return operationRepository.findAll();
     }
 
     @GetMapping(value = "/{id}")
-    public List<BankAccounts> login(@PathVariable("id") Integer id) {
-        return bankRepository.findByUserId(id);
+    public List<Operations> login(@PathVariable("id") Integer id) {
+        return operationRepository.findBySrcAccountId(id);
     }
 }
