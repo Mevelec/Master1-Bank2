@@ -1,7 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import HomeMain from "./component/HomeMain"
+import App from "./component/App";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render(
-    <HomeMain/> , document.getElementById('main')
+    <App/> , document.getElementById('main')
 )
