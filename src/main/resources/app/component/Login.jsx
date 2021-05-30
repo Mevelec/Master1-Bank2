@@ -1,5 +1,15 @@
 import React, {Component} from 'react'
 
+function Field ({name, value,onChange,children}) {
+        return (
+            <div>
+                <label htmlFor={name}> {children} </label>
+                <input type="text" value={value} onChange={onChange} id={name} name={name} className="form-control"/>
+            </div>
+
+        )
+}
+
 export default class Login extends Component {
 
     constructor(props) {
@@ -11,6 +21,7 @@ export default class Login extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+
     }
 
     handleChange(event) {
@@ -44,11 +55,13 @@ export default class Login extends Component {
                 <label htmlFor="username"> username : </label>
                 <input type="text" id="username" name="username" value={this.state.username} onChange={this.handleChange} />
 
-                <label htmlFor="password"> Password : </label>
-                <input type="text" id="password" name="password" value={this.state.password} onChange={this.handleChange} />
+                <Field name="username" value={this.state.username} onChange={this.handleChange}> Username :</Field>
+                <Field name="password" value={this.state.password} onChange={this.handleChange}> Password :</Field>
 
+                <div className="form-group">
+                    <button className="btn btn-primary" onSubmit={this.handleSubmit}> Connect </button>
+                </div>
 
-                <input type="submit" value="Envoyer" />
             </form>
         );
     }
