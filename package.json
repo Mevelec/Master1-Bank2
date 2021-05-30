@@ -13,8 +13,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "parcel": "parcel build --public-url / -d ./target/classes/public ./src/main/resources/public/index.html ./src/main/resources/public/login.html",
-    "start-dev": "parcel --public-url / -d ./target/classes/public ./src/main/resources/public/index.html ./src/main/resources/public/login.html"
+    "parcel": "parcel build --public-url / -d ./target/classes/public ./src/main/resources/public/index.html ./src/main/resources/public/login.html ./src/main/resources/public/viewAccount.html ./src/main/resources/public/viewTransaction.html",
+    "start-dev": "parcel --public-url / -d ./target/classes/public ./src/main/resources/public/index.html ./src/main/resources/public/login.html ./src/main/resources/public/viewAccount.html ./src/main/resources/public/viewTransaction.html"
   },
   "repository": {
     "type": "git",
