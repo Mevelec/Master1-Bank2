@@ -55,8 +55,6 @@ export default class Login extends Component {
     render() {
         return (
             <form onSubmit={this.handleSubmit}>
-                <label htmlFor="username"> username : </label>
-
                 <Field name="username" value={this.state.username} onChange={this.handleChange}> Username :</Field>
                 <Field name="password" value={this.state.password} onChange={this.handleChange}> Password :</Field>
 
