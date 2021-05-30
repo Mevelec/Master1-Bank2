@@ -31,4 +31,12 @@ class OperationsController {
         Users principal = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return operationRepository.findByDstAccountId(principal.getId());
     }
+
+    @GetMapping("/list")
+    public List<Operations> list(){
+        Users principal = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Operations> ret = operationRepository.findByDstAccountId(principal.getId());
+        ret.addAll(operationRepository.findBySrcAccountId(principal.getId()));
+        return ret;
+    }
 }
