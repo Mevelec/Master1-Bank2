@@ -7,8 +7,7 @@ Ce projet a été réalisé par :
 - Alexandre BRUNET 
 
 ## Accès à l'application 
-L'application déployée sur Clever-Cloud, et est accessible à l'adresse suivante : [TODO](todo)
-La base de données est également déployée sur Clever-Cloud.
+L'application déployée sur Clever-Cloud, et est accessible à l'adresse suivante : [TODO](todo). La base de données est également déployée sur Clever-Cloud.
 
 ## Les URL
 - [???]() : Permet de ???
