@@ -1,7 +1,10 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import Form from './component/Form'
+import Login from "./component/Login";
 
+ReactDOM.render(
+    <Login/>,
+    document.getElementById('main'))
+
+/*
 const inputs = [{
   name: "username",
   placeholder: "username",
@@ -13,7 +16,7 @@ const inputs = [{
 },{
   type: "submit",
   value: "Submit",
-  className: "btn" 
+  className: "btn"
 }]
 
 const props = {
@@ -28,3 +31,4 @@ const params = new URLSearchParams(window.location.search)
 ReactDOM.render(
   <Form {...props} error={params.get('error')} />,
   document.getElementById('main'))
+ */
