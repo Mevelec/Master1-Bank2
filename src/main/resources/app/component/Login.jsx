@@ -43,9 +43,12 @@ export default class Login extends Component {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: Object.keys(this.state).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(this.state[key])).join('&')
       };
-      fetch('/api/user/login', requestOptions)
-          .then(response => response.json())
-          .then(data => this.setState({ postId: data.id }));
+      fetch('/api/user/login', requestOptions).then(function(response) {
+        if(response.ok) {
+          window.location.href = "/ViewAccount";
+        }
+        throw new Error('Network response was not ok.');
+      });
     }
 
 
@@ -53,7 +56,6 @@ export default class Login extends Component {
         return (
             <form onSubmit={this.handleSubmit}>
                 <label htmlFor="username"> username : </label>
-                <input type="text" id="username" name="username" value={this.state.username} onChange={this.handleChange} />
 
                 <Field name="username" value={this.state.username} onChange={this.handleChange}> Username :</Field>
                 <Field name="password" value={this.state.password} onChange={this.handleChange}> Password :</Field>
