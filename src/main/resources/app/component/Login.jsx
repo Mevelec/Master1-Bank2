@@ -1,8 +1,6 @@
 import React, {Component} from 'react'
 
-class Field extends Component{
-    render() {
-        const {name, value,onChange,children} = this.props;
+function Field ({name, value,onChange,children}) {
         return (
             <div>
                 <label htmlFor={name}> {children} </label>
@@ -10,7 +8,6 @@ class Field extends Component{
             </div>
 
         )
-    }
 }
 
 export default class Login extends Component {
@@ -24,6 +21,7 @@ export default class Login extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+
     }
 
     handleChange(event) {
@@ -37,18 +35,22 @@ export default class Login extends Component {
     }
 
     handleSubmit(event){
-
+        event.preventDefault()
+        const data = JSON.stringify(this.state);
+        console.log(data)
     }
 
 
     render() {
         return (
-            <form target="/api/user/login" method="post">
+            <form onSubmit={this.handleSubmit} method="post" className="container">
 
             <Field name="username" value={this.state.username} onChange={this.handleChange}> Username :</Field>
             <Field name="password" value={this.state.password} onChange={this.handleChange}> Password :</Field>
 
-            <input type="submit" value="Envoyer" />
+            <div className="form-group">
+                <button className="btn btn-primary" onSubmit={this.handleSubmit}> Connect </button>
+            </div>
             </form>
         );
     }
