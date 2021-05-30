@@ -1,3 +1,4 @@
+
 # Projet AAW Spring Security
 
 ## Les étudiants
@@ -28,11 +29,23 @@ Permet de récupérer les opérations de débit et de crédit (retourne null si 
 
 ## La base de donnée :
 ### Liste des utilisateurs : 
-- TODO
-- TODO
+| **id** |  **nom**  | **mot de passe** |
+|:------:|:---------:|:----------------:|
+| 1      | Jean Bon  | jeanbon          |
+| 2      | Élie Miné | motdepasse       |
+
 ### Liste des comptes bancaires :
-- TODO
-- TODO
+| **id** |  **nom**            | **utilisateur** | **solde**    | 
+|:-------:|:------------------:|:---------------:|:------------:|
+| 1       | Compte principal   | Jean Bon        | 500          |
+| 2       | Compte secondaire  | Jean Bon        | 1750         |
+| 3       | Compte principal   | Élie Miné       | 200          |
+| 4       | Compte secondaire  | Élie Miné       | 800.5        |
+| 4       | Compte epargne     | Élie Miné       | 1500.99      |
 ### Liste des opérations : 
-- TODO
-- TODO
+| **id** |  **nom**              | **source** | **destinataire** | **valeur** |
+|:-------:|:--------------------:|:----------:|:----------------:|:----------:|
+| 1       | Transfert epargne    | Compte N°3 | Compte N°5       | 450        |
+| 2       | Nourriture tortues   | Compte N°1 | Compte N°3       | 1500       |
+| 3       | Tortue-dinateur      | Compte N°1 | Compte N°4       | 50         |
+| 4       | Terminator-tue       | Compte N°1 | Compte N°3       | 20         |
