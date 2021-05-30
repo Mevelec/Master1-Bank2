@@ -1,15 +1,5 @@
 import React, {Component} from 'react'
 
-function Field ({name, value,onChange,children}) {
-        return (
-            <div>
-                <label htmlFor={name}> {children} </label>
-                <input type="text" value={value} onChange={onChange} id={name} name={name} className="form-control"/>
-            </div>
-
-        )
-}
-
 export default class Login extends Component {
 
     constructor(props) {
@@ -37,7 +27,6 @@ export default class Login extends Component {
     handleSubmit(event){
       event.preventDefault();
 
-      const data = { username, password };
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -55,8 +44,12 @@ export default class Login extends Component {
     render() {
         return (
             <form onSubmit={this.handleSubmit}>
-                <Field name="username" value={this.state.username} onChange={this.handleChange}> Username :</Field>
-                <Field name="password" value={this.state.password} onChange={this.handleChange}> Password :</Field>
+
+                <label htmlFor="username"> Username: </label>
+                <input type="text" name="username"  id="username" value={this.state.username} onChange={this.handleChange} className="form-control"/>
+
+                <label htmlFor="password"> Password:  </label>
+                <input type="password"  name="password" id="password" value={this.state.password} onChange={this.handleChange} className="form-control"/>
 
                 <div className="form-group">
                     <button className="btn btn-primary" onSubmit={this.handleSubmit}> Connect </button>
