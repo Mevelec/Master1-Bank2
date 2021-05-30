@@ -45,8 +45,8 @@ export default class Login extends Component {
         return (
             <form target="/api/user/login" method="post">
 
-            <Field name="username" value={this.state.username}> Username :</Field>
-            <Field name="password" value={this.state.password}> Password :</Field>
+            <Field name="username" value={this.state.username} onChange={this.handleChange}> Username :</Field>
+            <Field name="password" value={this.state.password} onChange={this.handleChange}> Password :</Field>
 
             <input type="submit" value="Envoyer" />
             </form>
