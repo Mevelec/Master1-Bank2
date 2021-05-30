@@ -47,14 +47,10 @@ class UserController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @GetMapping("/list")
-    public List<Users> lignes(){
-        return userRepository.findAll();
-    }
-
-    @GetMapping("/{id}")
-    public Users lignes(@PathVariable("id") Integer id){
-        return userRepository.findById(id).get();
+    @GetMapping("/current")
+    ResponseEntity<Users> getUserConnected(Authentication authentication) {
+        Users user = (Users) authentication.getPrincipal();
+        return ResponseEntity.ok().body(user);
     }
     
     @PostMapping("/login")

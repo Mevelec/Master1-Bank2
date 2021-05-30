@@ -39,11 +39,17 @@ class BankAccountController {
 
     @GetMapping("/list")
     public List<BankAccounts> lignes(){
-        return bankRepository.findAll();
+        Users principal = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return bankRepository.findByUserId(principal.getId());
     }
 
     @GetMapping(value = "/{id}")
-    public List<BankAccounts> login(@PathVariable("id") Integer id) {
-        return bankRepository.findByUserId(id);
+    public BankAccounts login(@PathVariable("id") Integer id) {
+        Users principal = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        BankAccounts ret = bankRepository.findById(id).get();
+        if(ret.getUser().getId() == principal.getId()){
+            return ret;
+        }
+        return null;
     }
 }

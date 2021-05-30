@@ -1,34 +1,15 @@
 package fr.aaw.bank.web;
 
-import fr.aaw.bank.model.AuthTokens;
-import fr.aaw.bank.model.BankAccountRepository;
-import fr.aaw.bank.model.BankAccounts;
 import fr.aaw.bank.model.Operations;
 import fr.aaw.bank.model.OperationsRepository;
-import fr.aaw.bank.model.AuthTokenRepository;
 import fr.aaw.bank.model.Users;
-import fr.aaw.bank.model.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.security.Principal;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/Operation")
@@ -39,13 +20,15 @@ class OperationsController {
     @Autowired
     private OperationsRepository operationRepository;
 
-    @GetMapping("/list")
-    public List<Operations> lignes(){
-        return operationRepository.findAll();
+    @GetMapping("/debits")
+    public List<Operations> debits(){
+        Users principal = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return operationRepository.findBySrcAccountId(principal.getId());
     }
 
-    @GetMapping(value = "/{id}")
-    public List<Operations> login(@PathVariable("id") Integer id) {
-        return operationRepository.findBySrcAccountId(id);
+    @GetMapping("/credits")
+    public List<Operations> credits(){
+        Users principal = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return operationRepository.findByDstAccountId(principal.getId());
     }
 }
