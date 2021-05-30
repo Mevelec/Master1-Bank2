@@ -36,6 +36,7 @@ export default class Login extends Component {
 
     handleSubmit(event){
         event.preventDefault()
+
         const data = JSON.stringify(this.state);
         console.log(data)
     }
@@ -45,12 +46,13 @@ export default class Login extends Component {
         return (
             <form onSubmit={this.handleSubmit} method="post" className="container">
 
-            <Field name="username" value={this.state.username} onChange={this.handleChange}> Username :</Field>
-            <Field name="password" value={this.state.password} onChange={this.handleChange}> Password :</Field>
+                <Field name="username" value={this.state.username} onChange={this.handleChange}> Username :</Field>
+                <Field name="password" value={this.state.password} onChange={this.handleChange}> Password :</Field>
 
-            <div className="form-group">
-                <button className="btn btn-primary" onSubmit={this.handleSubmit}> Connect </button>
-            </div>
+                <div className="form-group">
+                    <button className="btn btn-primary" onSubmit={this.handleSubmit}> Connect </button>
+                </div>
+
             </form>
         );
     }

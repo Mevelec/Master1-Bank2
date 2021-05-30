@@ -49,3 +49,8 @@ Permet de récupérer les opérations de débit et de crédit (retourne null si 
 | 2       | Nourriture tortues   | Compte N°1 | Compte N°3       | 1500       |
 | 3       | Tortue-dinateur      | Compte N°1 | Compte N°4       | 50         |
 | 4       | Terminator-tue       | Compte N°1 | Compte N°3       | 20         |
+
+## En cas d'erreur de déployement du site : 
+Il est possible de lancer une version du site en local avec 
+* Lancer MyBankWebAalApplication via intellij
+* Lancer NPM via le script start-dev du fichier package.json
