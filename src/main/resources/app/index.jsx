@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Test from "./component/Test"
+import HomeMain from "./component/HomeMain"
 
 ReactDOM.render(
-    <Test/>  , document.getElementById('main')
+    <HomeMain/> , document.getElementById('main')
 )
