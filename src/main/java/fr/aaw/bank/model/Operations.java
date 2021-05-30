@@ -4,6 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -19,8 +22,10 @@ public class Operations {
     private Date date;
 
     @OneToOne
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
     private BankAccounts srcAccount;
     @OneToOne
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
     private BankAccounts dstAccount;
 
     //--------------------------- GETTERS SETTERS --------------------------
@@ -33,17 +38,17 @@ public class Operations {
     }
     
     // account --------------------
-    public BankAccounts getEmitterBankAccount() {
+    public BankAccounts getSrcAccount() {
         return srcAccount;
     }
-    public void setEmitterBankAccount(BankAccounts account) {
+    public void setSrcAccount(BankAccounts account) {
         this.srcAccount = account;
     }
 
-    public BankAccounts getRecieverBankAccount() {
+    public BankAccounts getDstAccount() {
         return dstAccount;
     }
-    public void setRecieverBankAccount(BankAccounts account) {
+    public void setDstAccount(BankAccounts account) {
         this.dstAccount = account;
     }
 
