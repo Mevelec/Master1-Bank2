@@ -1,5 +1,18 @@
 import React, {Component} from 'react'
 
+class Field extends Component{
+    render() {
+        const {name, value,onChange,children} = this.props;
+        return (
+            <div>
+                <label htmlFor={name}> {children} </label>
+                <input type="text" value={value} onChange={onChange} id={name} name={name} className="form-control"/>
+            </div>
+
+        )
+    }
+}
+
 export default class Login extends Component {
 
     constructor(props) {
@@ -31,14 +44,11 @@ export default class Login extends Component {
     render() {
         return (
             <form target="/api/user/login" method="post">
-                <label htmlFor="username"> username : </label>
-                <input type="text" id="username" name="username" value={this.state.username} onChange={this.handleChange} />
 
-                <label htmlFor="password"> Password : </label>
-                <input type="text" id="password" name="password" value={this.state.password} onChange={this.handleChange} />
+            <Field name="username" value={this.state.username}> Username :</Field>
+            <Field name="password" value={this.state.password}> Password :</Field>
 
-
-                <input type="submit" value="Envoyer" />
+            <input type="submit" value="Envoyer" />
             </form>
         );
     }
