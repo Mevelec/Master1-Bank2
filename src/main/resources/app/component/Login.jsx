@@ -24,13 +24,23 @@ export default class Login extends Component {
     }
 
     handleSubmit(event){
+      event.preventDefault();
 
+      const data = { username, password };
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: Object.keys(this.state).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(this.state[key])).join('&')
+      };
+      fetch('/api/user/login', requestOptions)
+          .then(response => response.json())
+          .then(data => this.setState({ postId: data.id }));
     }
 
 
     render() {
         return (
-            <form target="/api/user/login" method="post">
+            <form onSubmit={this.handleSubmit}>
                 <label htmlFor="username"> username : </label>
                 <input type="text" id="username" name="username" value={this.state.username} onChange={this.handleChange} />
 
@@ -42,9 +52,6 @@ export default class Login extends Component {
             </form>
         );
     }
-
-
-
 }
 
 /*
